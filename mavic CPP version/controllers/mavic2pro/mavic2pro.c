@@ -112,9 +112,11 @@ int main(int argc, char **argv) {
     // Retrieve robot position using the sensors.
     const double roll = wb_inertial_unit_get_roll_pitch_yaw(imu)[0] + M_PI / 2.0;
     const double pitch = wb_inertial_unit_get_roll_pitch_yaw(imu)[1];
-    const double altitude = wb_gps_get_values(gps)[1];
     const double roll_acceleration = wb_gyro_get_values(gyro)[0];
     const double pitch_acceleration = wb_gyro_get_values(gyro)[1];
+    const double altitude = wb_gps_get_values(gps)[1];
+    const double x_coordinate = wb_gps_get_values(gps)[0];
+    const double z_coordinate = wb_gps_get_values(gps)[2];
 
     // Blink the front LEDs alternatively with a 1 second rate.
     const bool led_state = ((int)time) % 2;
@@ -161,6 +163,25 @@ int main(int argc, char **argv) {
       }
       key = wb_keyboard_get_key();
     }
+
+
+    //Save image every second at height 3
+      if ((time - (int)time) == 0)
+      {
+        char x_string[20];
+        char z_string[20];
+        char y_string[20];
+        char final_filename[100];
+        sprintf(x_string, "%.1f", x_coordinate);
+        sprintf(y_string, "%.1f", altitude);
+        sprintf(z_string, "%.1f", z_coordinate);
+
+        snprintf(final_filename, sizeof(final_filename), "%s_%s_%s.jpg", x_string, y_string, z_string);
+
+        wb_camera_save_image(camera, final_filename, 100);
+        printf("Image Saved with name %s \n", final_filename);
+        
+      }
 
     // Compute the roll, pitch, yaw and vertical inputs.
     const double roll_input = k_roll_p * CLAMP(roll, -1.0, 1.0) + roll_acceleration + roll_disturbance;
