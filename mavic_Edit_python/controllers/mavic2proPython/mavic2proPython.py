@@ -70,32 +70,10 @@ while (robot.step(timestep) != -1):
 	yGPS = gps.getValues()[0]
 	zGPS = gps.getValues()[1]
 
-	
-
-	if((round(xGPS) == 0 ) and (round(yGPS) == 0 ) and (round(zGPS) == 1 )):
-		targetX = 1
-		targetY = 0
-		target_altitude = 1
-
-	if((round(xGPS) == 1 ) and (round(yGPS) == 0 ) and (round(zGPS) == 1 )):
-		targetX = 2
-		targetY = 0
-		target_altitude = 1
-	
-	if((round(xGPS) == 2 ) and (round(yGPS) == 0 ) and (round(zGPS) == 1 )):
-		targetX = 3
-		targetY = 0
-		target_altitude = 1
-
-	if((round(xGPS) == 3 ) and (round(yGPS) == 0 ) and (round(zGPS) == 1 )):
-		targetX = 4
-		targetY = 0
-		target_altitude = 1
-
-	if((round(xGPS) == 4 ) and (round(yGPS) == 0 ) and (round(zGPS) == 1 )):
-		targetX = 5
-		targetY = 0
-		target_altitude = 1
+	# Main Path Algorithm here
+	targetX = 0
+	targetY = 0
+	target_altitude = 1
 
 	print(str(round(xGPS))+","+str(round(yGPS))+","+str(round(zGPS))+" heading to "+str(targetX)+","+str(targetY)+","+str(target_altitude))
 
