@@ -13,8 +13,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.033167555109305774 -0.9989085547431787 -0.03288787845035119 4.69686267280308
-  position 1.6521072162529151 0.23194916066845372 -0.03572111239775795
+  orientation 0.3786882344087715 -0.7947880919824711 -0.4742437242212384 4.270998543705186
+  position 21.828658928588837 54.35871877359748 -5.865631231007306
   near 0.2
   follow "Mavic 2 PRO"
   followSmoothness 0.2
@@ -33,23 +33,6 @@ Floor {
   appearance SandyGround {
   }
 }
-Road {
-  translation -43.8 0.01 -9.2
-  rotation 0 1 0 1.1781
-  width 3
-  numberOfLanes 1
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    0 0 100
-    200 0 200
-  ]
-  splineSubdivision 8
-  appearance Pavement {
-    type "black stone"
-  }
-}
 SquareManhole {
   translation 0 -0.03 0
 }
@@ -65,5 +48,6 @@ Mavic2Pro {
   ]
 }
 ResidentialTower {
-  translation -7 0 -4.46
+  translation -20.92 0 -0.730014
+  rotation 0 1 0 3.14159
 }
