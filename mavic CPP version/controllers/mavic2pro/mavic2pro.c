@@ -37,11 +37,13 @@
 #include <webots/keyboard.h>
 #include <webots/led.h>
 #include <webots/motor.h>
+#include <webots/distance_sensor.h>
 
 #define SIGN(x) ((x) > 0) - ((x) < 0)
 #define CLAMP(value, low, high) ((value) < (low) ? (low) : ((value) > (high) ? (high) : (value)))
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   wb_robot_init();
   int timestep = (int)wb_robot_get_basic_time_step();
 
@@ -63,6 +65,10 @@ int main(int argc, char **argv) {
   WbDeviceTag camera_pitch_motor = wb_robot_get_device("camera pitch");
   // WbDeviceTag camera_yaw_motor = wb_robot_get_device("camera yaw");  // Not used in this example.
 
+  //Distance Sensor
+  WbDeviceTag distance_sensor = wb_robot_get_device("distance_sensor");
+  wb_distance_sensor_enable(distance_sensor, timestep);
+
   // Get propeller motors and set them to velocity mode.
   WbDeviceTag front_left_motor = wb_robot_get_device("front left propeller");
   WbDeviceTag front_right_motor = wb_robot_get_device("front right propeller");
@@ -70,7 +76,8 @@ int main(int argc, char **argv) {
   WbDeviceTag rear_right_motor = wb_robot_get_device("rear right propeller");
   WbDeviceTag motors[4] = {front_left_motor, front_right_motor, rear_left_motor, rear_right_motor};
   int m;
-  for (m = 0; m < 4; ++m) {
+  for (m = 0; m < 4; ++m)
+  {
     wb_motor_set_position(motors[m], INFINITY);
     wb_motor_set_velocity(motors[m], 1.0);
   }
@@ -79,12 +86,14 @@ int main(int argc, char **argv) {
   printf("Start the drone...\n");
 
   // Wait one second.
-  while (wb_robot_step(timestep) != -1) {
+  while (wb_robot_step(timestep) != -1)
+  {
     if (wb_robot_get_time() > 1.0)
       break;
   }
 
   // Display manual control message.
+  /*
   printf("You can control the drone with your computer keyboard:\n");
   printf("- 'up': move forward.\n");
   printf("- 'down': move backward.\n");
@@ -94,20 +103,26 @@ int main(int argc, char **argv) {
   printf("- 'shift + down': decrease the target altitude.\n");
   printf("- 'shift + right': strafe right.\n");
   printf("- 'shift + left': strafe left.\n");
+  */
 
   // Constants, empirically found.
-  const double k_vertical_thrust = 68.5;  // with this thrust, the drone lifts.
-  const double k_vertical_offset = 0.6;   // Vertical offset where the robot actually targets to stabilize itself.
-  const double k_vertical_p = 3.0;        // P constant of the vertical PID.
-  const double k_roll_p = 50.0;           // P constant of the roll PID.
-  const double k_pitch_p = 30.0;          // P constant of the pitch PID.
+  const double k_vertical_thrust = 68.5; // with this thrust, the drone lifts.
+  const double k_vertical_offset = 0.6;  // Vertical offset where the robot actually targets to stabilize itself.
+  const double k_vertical_p = 3.0;       // P constant of the vertical PID.
+  const double k_roll_p = 50.0;          // P constant of the roll PID.
+  const double k_pitch_p = 30.0;         // P constant of the pitch PID.
 
-  // Variables.
-  double target_altitude = 1.0;  // The target altitude. Can be changed by the user.
+  // Variables for coordinates.
+  double initial_z = 0.0;
+  double final_z = -21.0;
+  double final_height = 30.0;
+  double minimum_height = 20.0;
+  double target_altitude = 1.0; // The target altitude. Can be changed by the user.
 
   // Main loop
-  while (wb_robot_step(timestep) != -1) {
-    const double time = wb_robot_get_time();  // in seconds.
+  while (wb_robot_step(timestep) != -1)
+  {
+    const double time = wb_robot_get_time(); // in seconds.
 
     // Retrieve robot position using the sensors.
     const double roll = wb_inertial_unit_get_roll_pitch_yaw(imu)[0] + M_PI / 2.0;
@@ -117,6 +132,8 @@ int main(int argc, char **argv) {
     const double altitude = wb_gps_get_values(gps)[1];
     const double x_coordinate = wb_gps_get_values(gps)[0];
     const double z_coordinate = wb_gps_get_values(gps)[2];
+
+    double dist = wb_distance_sensor_get_value(distance_sensor);
 
     // Blink the front LEDs alternatively with a 1 second rate.
     const bool led_state = ((int)time) % 2;
@@ -131,6 +148,46 @@ int main(int argc, char **argv) {
     double roll_disturbance = 0.0;
     double pitch_disturbance = 0.0;
     double yaw_disturbance = 0.0;
+
+    // Show current coordinates
+    printf("Height: %.1f , X: %.1f , Z: %.1f , Distance: %.2f \n", altitude, x_coordinate, z_coordinate, dist);
+
+    //Main Algorithm Bounce
+    if (altitude >= final_height)
+    {
+      target_altitude = minimum_height;
+      printf("Flying Down to altitude %.1f \n", target_altitude);
+    }
+    else if (altitude <= minimum_height)
+    {
+      target_altitude = final_height;
+      printf("Flying Up to altitude %.1f \n", target_altitude);
+    }
+
+    if (altitude >= minimum_height)
+    {
+      roll_disturbance = -0.5;
+      printf("Moving Right \n");
+
+      //Get away if too close
+      if (dist <= 5)
+      {
+        pitch_disturbance = -2.0;
+        printf("Moving Back \n");
+      }
+    }
+    else
+    {
+      roll_disturbance = 0.1;
+    }
+
+    if (z_coordinate < final_z)
+    {
+      target_altitude = 0.0;
+      printf("Wall Scanned \n");
+    }
+
+    /*
     int key = wb_keyboard_get_key();
     while (key > 0) {
       switch (key) {
@@ -163,9 +220,13 @@ int main(int argc, char **argv) {
       }
       key = wb_keyboard_get_key();
     }
-
+    */
 
     //Save image every second at height 3
+
+    if (altitude < final_height && altitude > minimum_height)
+    {
+
       if ((time - (int)time) == 0)
       {
         char x_string[20];
@@ -180,8 +241,8 @@ int main(int argc, char **argv) {
 
         wb_camera_save_image(camera, final_filename, 100);
         printf("Image Saved with name %s \n", final_filename);
-        
       }
+    }
 
     // Compute the roll, pitch, yaw and vertical inputs.
     const double roll_input = k_roll_p * CLAMP(roll, -1.0, 1.0) + roll_acceleration + roll_disturbance;
