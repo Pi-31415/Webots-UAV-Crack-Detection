@@ -241,7 +241,7 @@ int main(int argc, char **argv)
 
         snprintf(final_filename, sizeof(final_filename), "%s_%s_%s.jpg", x_string, y_string, z_string);
 
-        wb_camera_save_image(camera, final_filename, 100);
+        //wb_camera_save_image(camera, final_filename, 100);
         printf("Image Saved with name %s \n", final_filename);
       }
     }
