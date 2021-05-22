@@ -7,4 +7,4 @@ centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: 0 "controllers/mavic2pro/mavic2pro.c"
 consoles: Console:All:All
-renderingDevicePerspectives: Mavic 2 PRO:camera;1;1.175;0;0
+renderingDevicePerspectives: Mavic 2 PRO:camera;1;2.02083;0;0

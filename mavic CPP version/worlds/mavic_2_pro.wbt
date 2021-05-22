@@ -13,8 +13,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.18072359605678875 -0.9605411087303414 -0.21142317816972958 4.604496121513756
-  position 48.914441679914404 39.68285533771167 -10.887798969310156
+  orientation 0.20568256212861502 -0.9523619014782977 -0.22516991861447544 4.656097743412645
+  position 26.858486184470067 22.593819953100652 -2.649491512170056
   near 0.2
   follow "Mavic 2 PRO"
   followType "None"
@@ -46,7 +46,7 @@ Mavic2Pro {
       name "distance_sensor"
       lookupTable [
         0 0 0
-        10 10 0
+        100 100 0
       ]
     }
   ]
@@ -58,6 +58,7 @@ Mavic2Pro {
     }
   ]
 }
-CommercialBuilding {
-  translation -17.09 0 -10.04
+ResidentialTower {
+  translation -19.25 0 -8.54998
+  rotation 0 1 0 1.5708
 }

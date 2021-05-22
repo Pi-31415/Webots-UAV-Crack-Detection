@@ -114,10 +114,12 @@ int main(int argc, char **argv)
 
   // Variables for coordinates.
   double initial_z = 0.0;
-  double final_z = -21.0;
-  double final_height = 30.0;
-  double minimum_height = 20.0;
+  double final_z = -9.0;
+  double final_height = 16.0;
+  double minimum_height = 1.0;
   double target_altitude = 1.0; // The target altitude. Can be changed by the user.
+
+  double min_dist = 8.0;
 
   // Main loop
   while (wb_robot_step(timestep) != -1)
@@ -170,7 +172,7 @@ int main(int argc, char **argv)
       printf("Moving Right \n");
 
       //Get away if too close
-      if (dist <= 5)
+      if (dist <= min_dist)
       {
         pitch_disturbance = -2.0;
         printf("Moving Back \n");
