@@ -13,8 +13,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.20568256212861502 -0.9523619014782977 -0.22516991861447544 4.656097743412645
-  position 26.858486184470067 22.593819953100652 -2.649491512170056
+  orientation -0.051321824218305244 -0.9981528104441735 0.03251211099426474 4.728215247719461
+  position 33.70144980576142 1.1572063244799375 -6.249404326470776
   near 0.2
   follow "Mavic 2 PRO"
   followType "None"
@@ -52,8 +52,9 @@ Mavic2Pro {
   ]
   cameraSlot [
     Camera {
-      width 400
-      height 240
+      fieldOfView 1
+      width 800
+      height 400
       near 0.2
     }
   ]
