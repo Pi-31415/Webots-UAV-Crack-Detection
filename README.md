@@ -1,4 +1,3 @@
-# Webots-DJI-Mavic-2-Pro-PID-Controller-master
- Modified version for Drone Research
+# Webots-UAV-Crack-Detection
 
- For the actual project
+ This repository contains the Webots simulation files for the conference paper *Automated Building Exterior Crack Inspection using UAVs, Open-Source Deep Learning and Photogrammetry*
