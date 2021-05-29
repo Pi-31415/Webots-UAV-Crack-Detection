@@ -119,7 +119,7 @@ int main(int argc, char **argv)
   double minimum_height = 1.0;
   double target_altitude = 1.0; // The target altitude. Can be changed by the user.
 
-  double min_dist = 2.0;
+  double min_dist = 8.0;
 
   // Main loop
   while (wb_robot_step(timestep) != -1)

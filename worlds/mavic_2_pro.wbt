@@ -14,7 +14,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.03278494424036 -0.9606304683559421 -0.27588811264242596 3.434120245912756
-  position 7.3469480991358385 34.82980914392252 -45.84027855230933
+  position 9.90073015701622 40.03210757659086 -53.80277719362005
   near 0.2
   follow "Mavic 2 PRO"
   followType "None"
@@ -60,6 +60,6 @@ Mavic2Pro {
   ]
 }
 ResidentialTower {
-  translation -10.87 0 -8.54998
+  translation -25.7 0 -8.54996
   rotation 0 1 0 1.5708
 }
