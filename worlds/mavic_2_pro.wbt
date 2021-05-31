@@ -13,8 +13,8 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.03278494424036 -0.9606304683559421 -0.27588811264242596 3.434120245912756
-  position 9.90073015701622 40.03210757659086 -53.80277719362005
+  orientation 0.061237371391273145 -0.9473543678727185 -0.31427644839785446 3.56398775927318
+  position 2.0930106507469803 7.383288699228103 -10.45398507314293
   near 0.2
   follow "Mavic 2 PRO"
   followType "None"
@@ -35,10 +35,10 @@ Floor {
   }
 }
 SquareManhole {
-  translation 0 -0.03 0
+  translation -1.51 -0.03 0
 }
 Mavic2Pro {
-  translation 0 0.1 0
+  translation -1.57 0.1 -2.9459e-06
   rotation 0 -0.7071067811865475 -0.7071067811865475 -3.14159
   bodySlot [
     DistanceSensor {
@@ -59,7 +59,13 @@ Mavic2Pro {
     }
   ]
 }
-ResidentialTower {
-  translation -8.04 0 -8.54997
-  rotation 0 1 0 1.5708
+AdvertisingBoard {
+  translation -3.39 1.59 -3.11
+  rotation 0 1 0 -1.5707953071795862
+  frontTexture [
+    "/home/pi/Desktop/80/-0.1_3.3_-0.2.jpg"
+  ]
+  backTexture [
+    "/home/pi/Desktop/Ek8K4r_UYAAW44Y.jpg"
+  ]
 }

@@ -114,8 +114,8 @@ int main(int argc, char **argv)
 
   // Variables for coordinates.
   double initial_z = 0.0;
-  double final_z = -18.0;
-  double final_height = 16.0;
+  double final_z = -6.0;
+  double final_height = 4.0;
   double minimum_height = 1.0;
   double target_altitude = 1.0; // The target altitude. Can be changed by the user.
 
