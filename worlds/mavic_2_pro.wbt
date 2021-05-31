@@ -60,6 +60,6 @@ Mavic2Pro {
   ]
 }
 ResidentialTower {
-  translation -25.7 0 -8.54996
+  translation -8.04 0 -8.54997
   rotation 0 1 0 1.5708
 }
